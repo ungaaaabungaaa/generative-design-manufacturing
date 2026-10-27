@@ -1,0 +1,3 @@
+# Optional independent format and coverage tools; not runtime dependencies.
+ezdxf==1.4.5
+coverage==7.17.0

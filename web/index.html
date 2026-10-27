@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Reproduce a constrained beam-design study, inspect real search histories, and export evaluated geometry."><title>FORM — Generative Design Study</title><link rel="icon" href="data:,"><link rel="stylesheet" href="styles.css"><script type="module" src="app.mjs"></script></head>
+<body>
+<a class="skip" href="#explorer">Skip to the design explorer</a>
+<header><a class="brand" href="#">FORM<span>/</span></a><p>GENERATIVE DESIGN<br>& MANUFACTURING</p><a class="source-link" href="https://github.com/ungaaaabungaaa/generative-design-manufacturing" rel="noreferrer">Source & reproduce ↗</a></header>
+<main>
+  <section class="intro"><div><p class="eyebrow">STUDY 001 / GEOMETRY UNDER CONSTRAINTS</p><h1>Less material.<br><span>Same model limits.</span></h1></div><p class="intro-note">A seeded evolutionary search for a stepped cantilever. Inspect the geometry, compare it with a uniform beam, and see every recorded generation.</p></section>
+  <div class="study-strip"><span>LINEAR BEAM MODEL</span><span>NO NEURAL MODEL TRAINED</span><span>PHYSICAL VALIDATION PENDING</span></div>
+  <div id="error" role="alert" hidden></div>
+  <section id="explorer" class="explorer" aria-label="Design explorer" hidden>
+    <aside class="sidebar">
+      <div class="panel-title"><span>01</span><h2>Study setup</h2></div>
+      <dl id="setup"></dl>
+      <div class="control-block"><label for="seed">Search seed</label><select id="seed"></select><p>Same inputs. Different search paths.</p></div>
+      <div class="control-block"><label for="generation">Recorded generation <output id="generation-value" for="generation"></output></label><input id="generation" type="range" min="0" step="1"><div class="range-endpoints"><span>Uniform baseline</span><span>Final</span></div></div>
+      <label class="check"><input type="checkbox" id="baseline-toggle" checked><span>Show uniform baseline</span></label>
+      <p class="sidebar-note">These controls inspect recorded runs. Run the Python tool to generate a new configuration.</p>
+      <a class="method-link" href="#methods">Model & limitations ↓</a>
+    </aside>
+    <div class="workspace">
+      <div class="drawing-heading"><div><p class="eyebrow">EVALUATED GEOMETRY / MILLIMETRES</p><h2 id="drawing-title">Seed 007</h2></div><span class="model-status">PASS / STUDY MODEL</span></div>
+      <div class="drawing-wrap"><svg id="beam-drawing" role="img" aria-label="Symmetric stepped beam and uniform baseline, with tip load and fixed support"></svg></div>
+      <div class="drawing-caption"><span>Axonometric model view · width extruded from the profile</span><span class="stress-key"><span></span>Nominal stress / configured limit</span></div>
+      <div class="metrics" aria-live="polite"><div><span>VOLUME REDUCTION</span><strong id="reduction"></strong><small>against the uniform baseline</small></div><div><span>MASS</span><strong id="mass"></strong><small id="baseline-mass"></small></div><div><span>TIP DEFLECTION</span><strong id="deflection"></strong><small id="deflection-limit"></small></div><div><span>MAX. NOMINAL STRESS</span><strong id="stress"></strong><small id="stress-limit"></small></div></div>
+      <div class="results-row"><section class="history-panel"><div class="panel-title"><span>02</span><h2>Search history</h2></div><p>Best feasible volume retained after each generation. The highlighted line is the selected seed.</p><svg id="history-chart" role="img" aria-label="Best feasible volume in cubic centimetres across generations for all three seeds"></svg></section><section class="download-panel"><div class="panel-title"><span>03</span><h2>Take the geometry</h2></div><p>Final design for the selected seed. Coordinates and extrusion width use millimetres.</p><div class="download-links"><a id="download-svg" download>Profile / SVG <span>↓</span></a><a id="download-dxf" download>Closed profile / DXF <span>↓</span></a><a id="download-scad" download>Extrusion source / OpenSCAD <span>↓</span></a></div><p class="export-note">Exports follow the evaluated profile. Step stresses, fixtures, machining, and physical performance still need engineering checks.</p></section></div>
+      <p class="run-summary" id="run-summary"></p>
+    </div>
+  </section>
+  <noscript><p>Enable JavaScript to inspect runs, or <a href="assets/report.json">read the measured report</a>.</p></noscript>
+  <section id="methods" class="methods"><div><p class="eyebrow">UNDER THE SURFACE</p><h2>Generation<br>needs a test.</h2><a href="assets/report.json" download>Download the complete report ↗</a></div><div class="method-grid"><article><span>A / THE SEARCH</span><h3>Seeded, bounded, repeatable.</h3><p>Mutation and crossover change section heights. Repair enforces the height grid and adjacent steps. Elitism retains the feasible baseline. Every candidate is scored with the beam evaluator.</p></article><article><span>B / THE COMPARISON</span><h3>A stated denominator.</h3><p>The baseline is the smallest feasible uniform height on the same grid, under the same load, span, material inputs, and limits. Volume reduction is divided by that baseline's volume.</p></article><article><span>C / THE PHYSICS</span><h3>An explicit approximation.</h3><p>Piecewise Euler–Bernoulli integration estimates tip deflection and nominal bending stress. The evaluator is checked against constant-section closed forms and independent numerical integration.</p></article><article><span>D / THE BOUNDARY</span><h3>A study, before a part.</h3><p>The model omits step stress concentrations, shear, fatigue, buckling, fixtures, and process tolerances. These results are not FEA, global optimality, structural certification, or a tested physical build.</p></article></div></section>
+  <footer><span>FORM / CONSTRAINED DESIGN LAB · BUILT 2026</span><a href="https://web.mit.edu/1.105/emech10_04.pdf" rel="noreferrer">Beam theory reference / MIT ↗</a></footer>
+</main>
+</body>
+</html>
