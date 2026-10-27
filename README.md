@@ -1,5 +1,9 @@
 # Generative Design & Manufacturing
 
+![Generative AI for Design and Manufacturing line-art concept](docs/images/project-cover.png)
+
+*Generated line-art concept illustration.*
+
 **FORM** is a reproducible geometry-search study. It generates stepped beam profiles, checks an explicit mechanics model, compares them with a stated baseline, and exports the evaluated geometry.
 
 ![Actual benchmark results](figures/benchmark.png)

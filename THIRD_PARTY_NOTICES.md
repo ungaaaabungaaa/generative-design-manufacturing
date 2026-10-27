@@ -6,4 +6,4 @@ Optional plotting uses Matplotlib and optional independent DXF validation uses e
 
 The original `2-axis-pen-ploter` repository remains on `archive/before-generative-design-2026-10-27`. Its `grbl_code.ino` attributes Sungeun K. Jeon (2015) and declares MIT terms. The original compressed plotter tooling and that source remain archived unchanged. They are not used by the new study, and the new license does not relicense archived material.
 
-Pending generated concept covers are excluded. The actual benchmark figure and evaluated SVG profiles are computational outputs, not evidence of a physical part.
+The user approved the generated line-art cover on 27 October 2026. Its prompt, reference hashes, and asset hash are recorded in [cover provenance](docs/images/cover-provenance.json). It is concept artwork. The actual benchmark figure and evaluated SVG profiles are computational outputs, not evidence of a physical part.

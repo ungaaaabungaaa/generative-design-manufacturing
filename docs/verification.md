@@ -26,7 +26,7 @@ python3 -m coverage run --branch --source=design_lab -m unittest discover -s tes
 python3 -m coverage report -m
 ```
 
-The Matplotlib 3.11.2 comparison figure was generated from the actual report and visually inspected. The optional `scripts/figure.py` regenerates it. No generated concept cover is included.
+The Matplotlib 3.11.2 comparison figure was generated from the actual report and visually inspected. The optional `scripts/figure.py` regenerates it. The user-approved line-art concept cover was later added with its portable provenance record; its PNG decoded correctly at 1672×941, and SHA-256 matched the approved asset manifest. Concept art remains separate from the measured figure.
 
 ## Actual browser evidence
 
