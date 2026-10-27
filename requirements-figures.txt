@@ -1,0 +1,2 @@
+# Optional tools only; the study and viewer have no third-party runtime dependency.
+matplotlib==3.11.2
