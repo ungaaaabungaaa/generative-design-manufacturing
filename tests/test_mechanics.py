@@ -2,7 +2,7 @@ from dataclasses import replace
 import math
 import unittest
 
-from design_lab.mechanics import Config, InputError, evaluate, uniform_baseline
+from design_lab.mechanics import Config, InputError, evaluate, evaluate_loads, uniform_baseline
 
 
 class MechanicsTests(unittest.TestCase):
@@ -66,6 +66,24 @@ class MechanicsTests(unittest.TestCase):
         for heights in [[18]*11, [0]*12, [float('nan')]*12, [1e200]*12, [18.1]*12, [True]*12]:
             with self.subTest(heights=heights), self.assertRaises(InputError):
                 evaluate(Config(), heights)
+
+    def test_load_sweep_rechecks_fixed_geometry_and_records_failed_loads(self):
+        cfg = Config()
+        heights = [18] * cfg.sections
+        result = evaluate_loads(cfg, heights, [25, 50, 500])
+        self.assertEqual([row['tip_load_n'] for row in result], [25, 50, 500])
+        self.assertTrue(result[1]['feasible'])
+        self.assertFalse(result[2]['feasible'])
+        self.assertIn('stress', result[2]['violations'])
+        self.assertEqual(result[0]['heights_mm'], heights)
+        self.assertAlmostEqual(result[0]['max_stress_mpa'] * 2, result[1]['max_stress_mpa'])
+        self.assertAlmostEqual(result[0]['tip_deflection_mm'] * 2, result[1]['tip_deflection_mm'])
+        self.assertEqual(cfg.tip_load_n, 50)
+
+    def test_load_sweep_rejects_unbounded_duplicate_or_invalid_loads(self):
+        for loads in [[], [50] * 17, [50, 50], [True], [float('nan')], [0], [5001]]:
+            with self.subTest(loads=loads), self.assertRaises(InputError):
+                evaluate_loads(Config(), [18] * 12, loads)
 
     def test_infeasible_problem_does_not_return_a_fake_baseline(self):
         with self.assertRaisesRegex(InputError, 'No feasible uniform'):

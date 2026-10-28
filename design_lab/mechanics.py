@@ -1,6 +1,6 @@
 """Exact piecewise Euler–Bernoulli tip response, using N/mm/MPa units."""
 
-from dataclasses import dataclass, fields
+from dataclasses import dataclass, fields, replace
 import math
 
 
@@ -103,3 +103,18 @@ def uniform_baseline(config):
         if result['feasible']:
             return result
     raise InputError('No feasible uniform baseline within the configured bounds; maximum height also fails')
+
+
+def evaluate_loads(config, heights, loads):
+    """Re-evaluate fixed geometry under explicit tip loads; never repair or optimize it."""
+    if not isinstance(loads, (list, tuple)) or not 1 <= len(loads) <= 16:
+        raise InputError('supply between one and sixteen unique tip loads')
+    if any(type(load) not in (int, float) or not math.isfinite(load) for load in loads):
+        raise InputError('tip loads must be finite numbers')
+    if len(set(loads)) != len(loads):
+        raise InputError('tip loads must be unique')
+    results = []
+    for load in loads:
+        result = evaluate(replace(config, tip_load_n=load), heights)
+        results.append({'tip_load_n': load, **result})
+    return results

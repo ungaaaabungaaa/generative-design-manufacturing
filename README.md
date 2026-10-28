@@ -76,3 +76,11 @@ Step/clamp stress concentrations, shear deformation, fatigue, buckling, fixtures
 This repository became the design study on **27 October 2026**. The original plotter work is preserved on [`archive/before-generative-design-2026-10-27`](https://github.com/ungaaaabungaaa/generative-design-manufacturing/tree/archive/before-generative-design-2026-10-27). Its earlier history and stars predate this implementation. The portfolio website remains unchanged.
 
 [MIT beam-deflection reference](https://web.mit.edu/1.105/emech10_04.pdf), [attribution](THIRD_PARTY_NOTICES.md), [contributing](CONTRIBUTING.md), [security notes](SECURITY.md). MIT applies to the new code; see [LICENSE](LICENSE).
+
+## Check sensitivity to tip load
+
+```sh
+python3 scripts/load_sensitivity.py --loads 40 50 60 --out load-sensitivity.json
+```
+
+This re-evaluates the bundled uniform baseline and each final seeded design at explicit loads in newtons. It preserves their geometry and records actual stress, deflection, margins, feasibility, and violations using the same evaluator. Failed loads remain in the output. The JSON includes the source report hash and model configuration. Supply 1–16 unique loads within 1–5000 N; existing files are never overwritten. This is a model-only sensitivity check, without re-optimization or physical certification. The nominal search and committed study results are unchanged.
